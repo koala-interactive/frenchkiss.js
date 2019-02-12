@@ -56,7 +56,7 @@ Or install using [npm](https://npmjs.org):
 
 ### Minimal code
 
-Tell FrenchKiss what to return by simply giving it a table object, where the key is the search reference and the value is the already-translated string.
+Tell FrenchKiss what to returns by simply giving it a table object, where the key is the search reference and the value is the already-translated string.
 
 ```js
 import frenchkiss from 'frenchkiss';
@@ -68,11 +68,11 @@ frenchkiss.locale('en');
 frenchkiss.set('en', {
   hello: 'Hello {name} !',
   goodbye: 'Bye !',
-  // and other phrases...
+  // and other sentences...
 });
 
 frenchkiss.t('hello', {
-  name: 'John'
+  name: 'John',
 }); // => 'Hello John !'
 ```
 
@@ -102,14 +102,16 @@ frenchkiss.set('en', {
 
 ### frenchkiss.t(key: string, params?: object, lang?: string): string
 
-The most used method to returns translation. It's build with performance in concern What you should know about it :
+The most used method to returns translation. It's built with performance in mind
+Here is what you should know about it :
+
 - ✅ It does support multiple interpolation variable
 - ✅ It supports interpolation.
 - ✅ It supports `PLURAL`.
 - ✅ It supports `SELECT`.
 - ✅ It supports nested `PLURAL`, `SELECT` and `variables`.
 - ❌ It does not support nested keys _(to keep it fast)_.
-- ❌ It does not support date, number, devise formating (maybe check for [Intl.NumberFormat](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/NumberFormat) and [Intl.DateTimeFormat](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/DateTimeFormat)).
+- ❌ It does not support date, number, devise formatting (maybe check for [Intl.NumberFormat](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/NumberFormat) and [Intl.DateTimeFormat](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/DateTimeFormat)).
 
 ```js
 set('en', {
@@ -121,10 +123,10 @@ t('hello', { name: 'John' }); // => 'Hello John !'
 t('hello', { name: 'Anna' }); // => 'Hello Anna !'
 ```
 
-> **Note:** By default, if parameters is not given it will be interpreted as an empty string.
+> **Note:** By default, if no parameters are given it will be interpreted as an empty string.
 
-If you are working with concurent connections it's also possible to use the third parameter `lang` to force the language to use.
-Doing a generator that force the language for use and pass it to your function can be what you are looking for.
+If you are working with concurrent connections it's also possible to use the third parameter `lang` to force the language to use.
+Doing a generator that forces the language use and pass it to your function can be what you are looking for.
 
 ```js
 frenchkiss.locale('fr');
@@ -133,7 +135,7 @@ frenchkiss.set('en', {
 });
 
 // Helper
-const generateLanguageTranslator = (lang) => {
+const generateLanguageTranslator = lang => {
   return (key, params) => frenchkiss.t(key, params, lang);
 };
 
@@ -156,7 +158,7 @@ Extend the translation table for the language. In contrary of `set()`, the previ
 
 ### frenchkiss.unset(language: string)
 
-If you need to clean the data of a stored language for memory optimizations, unset is all you need for.
+If you need to clean the data of a stored language for memory optimizations, unset is all you need.
 
 ---
 
@@ -187,7 +189,7 @@ t('howareyou'); // => 'How are you ?' <- from 'en' fallback
 
 ### frenchkiss.onMissingKey(fn: Function)
 
-When the client request a missing key, frenchKiss will returns the key as result. It's possible to handle it and returns what you want or just send an event to your error reporting system.
+When the client requests a missing key, frenchKiss will returns the key as result. It's possible to handle it and return what you want or just send an event to your error reporting system.
 
 ```js
 frenchkiss.t('missingkey'); // => 'missingkey'
@@ -207,7 +209,7 @@ frenchkiss.t('missingkey'); // => 'An error happened (missingkey)'
 
 ### SELECT expression
 
-If you needs to display different text messages depending on the value of a variable, you need to translate all of those text messages... or you can handle this with a select ICU expression.
+If you need to display different text messages depending on the value of a variable, you need to translate all of those text messages... or you can handle this with a select ICU expression.
 
 ```js
 set('en', {
@@ -230,7 +232,7 @@ t('your_pet', { pet: 'rat' }); // => 'You own a rat ! What is that?!'
 
 ### PLURAL expression
 
-It's basically the same than select, except you have to use the "=" symbol for direct checking.
+It's basically the same as select, except you have to use the "=" symbol for direct checking.
 
 ```js
 set('en', {
@@ -247,13 +249,13 @@ t('bought_apple', { count: 5 }); // => 'I bought 5 apples!'
 - The second parameter identifies this as a `plural` expression type.
 - The third parameter is a pattern consisting of keys and their matching values.
 
-> ⚠️ As of select expression, the plural is a lightweight version of [ICU FormatMessage](http://userguide.icu-project.org/formatparse/messages) (`offset:1` and `#` are not integrated).
+> ⚠️ Like the select expression, the plural is a lightweight version of [ICU FormatMessage](http://userguide.icu-project.org/formatparse/messages) (`offset:1` and `#` are not integrated).
 
 ---
 
 ### Plural Category
 
-It's also possible to work with plural category. Multiples languages have multiple pluralizaton rules. You'll have to write a function returning the type to check.
+It's also possible to work with plural category. Multiple languages have multiple pluralization rules. You'll have to write a function returning the type to check.
 The functions are not included by default in the package (not needed in most cases). But you can extract them from other populars repositories:
 
 - [Angular](https://github.com/angular/angular/blob/master/packages/common/src/i18n/localization.ts#L94)
@@ -264,12 +266,13 @@ The functions are not included by default in the package (not needed in most cas
 import { locale, set, t, plural } from 'frenchkiss';
 
 set('en', {
-  takemymoney: 'Take {N} dollar{{N, plural, one{} =5{s! Take it} other{s}} please.',
+  takemymoney:
+    'Take {N} dollar{{N, plural, one{} =5{s! Take it} other{s}} please.',
 });
 
 // Set here your plural category function
 plural('en', n => (n !== 1 ? 'one' : 'other'));
-plural('fr', n => ((n === 0 || i === 1) ? 'one' : 'other'));
+plural('fr', n => (n === 0 || i === 1 ? 'one' : 'other'));
 // etc.
 
 t('takemymoney', { N: 0 }); // => 'Take 0 dollar please.'
