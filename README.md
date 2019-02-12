@@ -1,5 +1,6 @@
 # FrenchKiss.js
 
+[![Build Status](https://travis-ci.com/koala-interactive/frenchkiss.js.svg)](https://travis-ci.com/koala-interactive/frenchkiss.js)
 [![File size](https://img.shields.io/badge/GZIP%20size-1021%20B-brightgreen.svg)](./dist/umd/frenchkiss.js)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
