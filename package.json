@@ -1,6 +1,6 @@
 {
   "name": "frenchkiss",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The blazing fast lightweight translation module for javascript",
   "author": "Vincent Thibault <vthibault.mobile@gmail.com>",
   "license": "MIT",

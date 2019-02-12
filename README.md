@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/koala-interactive/frenchkiss.js.svg)](https://travis-ci.com/koala-interactive/frenchkiss.js)
 [![File size](https://img.shields.io/badge/GZIP%20size-1021%20B-brightgreen.svg)](./dist/umd/frenchkiss.js)
+![](https://img.shields.io/david/koala-interactive/frenchkiss.js.svg)
+![](https://img.shields.io/snyk/vulnerabilities/github/koala-interactive/frenchkiss.js.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 FrenchKiss.js is a blazing fast lightweight i18n helper library written in JavaScript, working both in the browser and NodeJS environments. It provides a simple and really fast solution for handling internationalization.
