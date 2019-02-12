@@ -56,7 +56,7 @@ Or install using [npm](https://npmjs.org):
 
 ### Minimal code
 
-Tell FrenchKiss what to returns by simply giving it a table object, where the key is the search reference and the value is the already-translated string.
+Tell FrenchKiss what to return by simply giving it a table object, where the key is the search reference and the value is the already-translated string.
 
 ```js
 import frenchkiss from 'frenchkiss';
