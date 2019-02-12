@@ -1,0 +1,55 @@
+{
+  "name": "frenchkiss",
+  "version": "0.0.1",
+  "description": "The blazing fast lightweight translation module for javascript",
+  "author": "Vincent Thibault <vthibault.mobile@gmail.com>",
+  "license": "MIT",
+  "main": "./dist/cjs/frenchkiss.js",
+  "module": "./dist/esm/frenchkiss.js",
+  "browser": {
+    "./dist/cjs/frenchkiss.js": "./dist/umd/frenchkiss.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bugs": {
+    "url": "https://github.com/koala-interactive/frenchkiss.js/issues"
+  },
+  "repository": "github:koala-interactive/frenchkiss.js",
+  "scripts": {
+    "lint": "eslint src/*.js test/*.js",
+    "test": "mocha --require @babel/register --recursive test",
+    "build": "del dist && npm run update-license && rollup -c && npm run update-filesize",
+    "update-license": "node utils/update-license.js",
+    "update-filesize": "node utils/update-size.js"
+  },
+  "keywords": [
+    "frenchkiss",
+    "french-kiss",
+    "french kiss",
+    "i18n",
+    "l10n",
+    "internationalization",
+    "internationalisation",
+    "translate",
+    "translation",
+    "interpolation",
+    "language"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/register": "^7.0.0",
+    "chai": "^4.2.0",
+    "del-cli": "^1.1.0",
+    "eslint": "^5.12.1",
+    "eslint-config-prettier": "^4.0.0",
+    "mocha": "^5.2.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-size-snapshot": "^0.8.0",
+    "rollup-plugin-terser": "^4.0.3"
+  }
+}
