@@ -10,6 +10,10 @@ FrenchKiss.js is a blazing fast lightweight i18n helper library written in JavaS
 
 FrenchKiss is by now, _the fastest i18n JS package_ out there, working **5 to 1000 times faster** than any others by **JIT compiling** the translations, try it by running the benchmarks !
 
+> #### Minimum requirements:
+>
+> ![Node 0.1](https://img.shields.io/badge/node-0.1-blue.svg) ![IE 9](https://img.shields.io/badge/IE-9-blue.svg)
+
 ---
 
 ## 🚀 Installation
@@ -22,15 +26,19 @@ Or install using [npm](https://npmjs.org):
 
     $ npm i frenchkiss
 
+---
+
 ## ⏳ Running the tests
 
     $ npm test
+
+---
 
 ## ⚙️ Running the benchmarks
 
     $ cd benchmark
     $ yarn
-    $ node .
+    $ yarn start
 
 |                |            Raw String |           Interpolate |                Plural |  Plural + Interpolate |
 | :------------- | --------------------: | --------------------: | --------------------: | --------------------: |
