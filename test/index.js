@@ -129,6 +129,17 @@ describe('t', () => {
     expect(i18n.t('some_cats', { N: 8 })).to.equal('There are 8 cats here.');
   });
 
+  it('interpolates plural with string', () => {
+    i18n.set('en', {
+      some_cats:
+        'There {N,plural,=0{is no cat} =1{is one cat} other{are {N} cats}} here.',
+    });
+
+    expect(i18n.t('some_cats', { N: '0' })).to.equal('There is no cat here.');
+    expect(i18n.t('some_cats', { N: '1' })).to.equal('There is one cat here.');
+    expect(i18n.t('some_cats', { N: '8' })).to.equal('There are 8 cats here.');
+  });
+
   it('interpolates select', () => {
     i18n.set('en', {
       love_pet:
@@ -138,6 +149,20 @@ describe('t', () => {
     expect(i18n.t('love_pet', { type: 'dog' })).to.equal('I love my good boy.');
     expect(i18n.t('love_pet', { type: 'cat' })).to.equal('I love my evil cat.');
     expect(i18n.t('love_pet', { type: '...' })).to.equal('I love my pet.');
+  });
+
+  it('interpolates select with string and numbers', () => {
+    i18n.set('en', {
+      number:
+        'Test {type,select,1{one} 2{two} other {infinity}}.',
+    });
+
+    expect(i18n.t('number', { type: '1' })).to.equal('Test one.');
+    expect(i18n.t('number', { type: 1 })).to.equal('Test one.');
+    expect(i18n.t('number', { type: '2' })).to.equal('Test two.');
+    expect(i18n.t('number', { type: 2 })).to.equal('Test two.');
+    expect(i18n.t('number', { type: '3' })).to.equal('Test infinity.');
+    expect(i18n.t('number', { type: 3 })).to.equal('Test infinity.');
   });
 
   it('interpolate with spaces', () => {
