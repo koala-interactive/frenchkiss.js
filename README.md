@@ -12,7 +12,7 @@ FrenchKiss is by now, _the fastest i18n JS package_ out there, working **5 to 10
 
 > #### Minimum requirements:
 >
-> ![Node 0.1](https://img.shields.io/badge/node-0.1-blue.svg) ![IE 9](https://img.shields.io/badge/IE-9-blue.svg)
+> ![Node 0.10](https://img.shields.io/badge/node-0.10-blue.svg) ![IE 9](https://img.shields.io/badge/IE-9-blue.svg)
 
 ---
 
