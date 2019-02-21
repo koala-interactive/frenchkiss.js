@@ -266,11 +266,7 @@ t('bought_apple', { count: 5 }); // => 'I bought 5 apples!'
 ### Plural Category
 
 It's also possible to work with plural category. Multiple languages have multiple pluralization rules. You'll have to write a function returning the type to check.
-The functions are not included by default in the package (not needed in most cases). But you can extract them from other populars repositories:
-
-- [Angular](https://github.com/angular/angular/blob/master/packages/common/src/i18n/localization.ts#L94)
-- [Polyglot](https://github.com/airbnb/polyglot.js/blob/master/index.js#L49)
-- others.
+The functions are not included by default in the package (not needed in most cases). But you can get some of them from [PLURAL.md](./PLURAL.md) file.
 
 ```js
 import { locale, set, t, plural } from 'frenchkiss';
