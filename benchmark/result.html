@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>i18n Benchmark</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+      body {
+        height: calc(100vh - 20px);
+      }
+    </style>
+  </head>
+</html>
+<script>
+  google.charts.load('current', {
+    packages: ['corechart', 'bar'],
+  });
+
+  google.charts.setOnLoadCallback(function() {
+    var data = google.visualization.arrayToDataTable([["JS Libraries","raw_string","interpolate","plural","plural_interpolate"],["vuejs-i18n",894837.1251090753,634484.8677565113,817304.2458074925,531421.0311307592],["polyglot",41046.049358745186,35578.86721474208,40554.52185385045,35866.912611214044],["i18n-js",878622.6235702654,150445.19492768619,438481.26683208847,156302.41917147685],["google closure",2514560.2910368815,334191.29816211713,303772.43718937406,194103.4702250064],["frenchkiss",22427482.7382933,11176555.213159151,14514195.550683904,9992611.762551272]]);
+
+    new google.charts.Bar(document.body).draw(data, {
+      chart: {
+        title: 'i18n Benchmark',
+        subtitle: 'Opts / secs',
+      },
+    });
+  });
+</script>

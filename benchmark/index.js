@@ -15,13 +15,45 @@ const expectedResults = {
 };
 
 (async function execute() {
+  const output = {
+    tests: [],
+    results: {},
+  };
+
   fs.readdirSync(path.join(__dirname, 'tests')).forEach(file => {
-    loadTest(require(path.join(__dirname, 'tests', file)));
+    const test = require(path.join(__dirname, 'tests', file));
+    output.results[test.name] = [];
+    loadTest(test);
   });
 
   for (const [key, modules] of Object.entries(suites)) {
-    await runTestSuite(key, modules);
+    output.tests.push(key);
+
+    const list = await runTestSuite(key, modules);
+    list.forEach(lib => {
+      output.results[lib.name].push(lib.hz);
+    });
   }
+
+  const results = [
+    ['JS Libraries', ...output.tests],
+    ...Object.keys(output.results)
+      .reverse()
+      .map(library => [library, ...output.results[library]]),
+  ];
+
+  const statFile = path.join(__dirname, './result.html');
+  const fileContent = fs.readFileSync(statFile).toString();
+
+  fs.writeFileSync(
+    statFile,
+    fileContent.replace(
+      /arrayToDataTable\(([^;]+)\);/,
+      `arrayToDataTable(${JSON.stringify(results)});`
+    )
+  );
+
+  console.log(`\x1b[33mGenerated file: ${statFile}\x1b[0m`);
 })();
 
 function loadTest({ name, prepare, beforeTest, execute }) {
@@ -60,12 +92,13 @@ function runTestSuite(key, modules) {
       const a = (ref / list[1].hz).toFixed(1);
       const b = (ref / list[list.length - 1].hz).toFixed(1);
 
-      resolve();
       console.log(
         `\x1b[32m${
           list[0].name
         } is ${a} to ${b} times faster than others\x1b[0m`
       );
+
+      resolve(list);
     };
 
     console.log(`-- ${key.replace(/_/g, ' ').toUpperCase()} ---------------`);
