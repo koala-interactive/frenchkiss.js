@@ -1,7 +1,7 @@
 const i18nJS = require('i18n-js');
 
 module.exports = {
-  name: 'i18n-js',
+  name: 'I18n.js',
   prepare() {
     i18nJS.locale = 'en';
     i18nJS.translations['en'] = {

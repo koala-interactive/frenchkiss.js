@@ -14,7 +14,7 @@ const dataMsg = {
 const cache = {};
 
 module.exports = {
-  name: 'google closure',
+  name: 'Google Closure',
   beforeTest(key) {
     delete cache[key];
   },

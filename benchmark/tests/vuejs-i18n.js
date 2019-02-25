@@ -5,7 +5,7 @@ const VueI18n = require('vue-i18n');
 let vueI18n;
 
 module.exports = {
-  name: 'vuejs-i18n',
+  name: 'Vue I18n',
   prepare() {
     Vue.use(VueI18n);
     vueI18n = new VueI18n({

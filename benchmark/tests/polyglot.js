@@ -3,7 +3,7 @@ const Polyglot = require('node-polyglot');
 let p;
 
 module.exports = {
-  name: 'polyglot',
+  name: 'Polyglot.js',
   prepare() {
     p = new Polyglot();
     p.locale('fr');

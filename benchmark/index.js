@@ -27,7 +27,12 @@ const expectedResults = {
   });
 
   for (const [key, modules] of Object.entries(suites)) {
-    output.tests.push(key);
+    output.tests.push(
+      key
+        .split(/[\s|_]/)
+        .map(v => v.charAt(0).toUpperCase() + v.substr(1))
+        .join(' ')
+    );
 
     const list = await runTestSuite(key, modules);
     list.forEach(lib => {
@@ -88,15 +93,17 @@ function runTestSuite(key, modules) {
         .map((v, i) => event.currentTarget[i])
         .sort((a, b) => b.hz - a.hz);
 
-      const ref = list[0].hz;
-      const a = (ref / list[1].hz).toFixed(1);
-      const b = (ref / list[list.length - 1].hz).toFixed(1);
+      if (list.length > 1) {
+        const ref = list[0].hz;
+        const a = (ref / list[1].hz).toFixed(1);
+        const b = (ref / list[list.length - 1].hz).toFixed(1);
 
-      console.log(
-        `\x1b[32m${
-          list[0].name
-        } is ${a} to ${b} times faster than others\x1b[0m`
-      );
+        console.log(
+          `\x1b[32m${
+            list[0].name
+          } is ${a} to ${b} times faster than others\x1b[0m`
+        );
+      }
 
       resolve(list);
     };
