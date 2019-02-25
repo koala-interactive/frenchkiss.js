@@ -1,7 +1,7 @@
 const frenchKiss = require('../../dist/umd/frenchkiss.js');
 
 module.exports = {
-  name: 'frenchkiss',
+  name: 'FrenchKiss.js',
   prepare() {
     frenchKiss.locale('fr');
     frenchKiss.set('fr', {
@@ -12,9 +12,6 @@ module.exports = {
       plural_interpolate:
         'There is {name1} and {N,plural,=0{no one}=1{one person}other{{N} people}} here.',
     });
-  },
-  beforeTest(key) {
-    delete frenchKiss.cache.fr[key];
   },
   execute(key) {
     return frenchKiss.t(key, {

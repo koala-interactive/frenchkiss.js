@@ -1,8 +1,8 @@
 # FrenchKiss.js
 
-[![Build Status](https://travis-ci.com/koala-interactive/frenchkiss.js.svg)](https://travis-ci.com/koala-interactive/frenchkiss.js)
+[![Build Status](https://travis-ci.com/koala-interactive/frenchkiss.js.svg?branch=master)](https://travis-ci.com/koala-interactive/frenchkiss.js)
 [![File size](https://img.shields.io/badge/GZIP%20size-1021%20B-brightgreen.svg)](./dist/umd/frenchkiss.js)
-![](https://img.shields.io/david/koala-interactive/frenchkiss.js.svg)
+![](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
 ![](https://img.shields.io/snyk/vulnerabilities/github/koala-interactive/frenchkiss.js.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
@@ -40,13 +40,7 @@ Or install using [npm](https://npmjs.org):
     $ yarn
     $ yarn start
 
-|                |            Raw String |           Interpolate |                Plural |  Plural + Interpolate |
-| :------------- | --------------------: | --------------------: | --------------------: | --------------------: |
-| vuejs-i18n     |        79,205 ops/sec |        73,128 ops/sec |        73,128 ops/sec |        49,862 ops/sec |
-| google closure |       379,684 ops/sec |        35,172 ops/sec |        35,172 ops/sec |        21,972 ops/sec |
-| i18n-js        |        86,734 ops/sec |        48,019 ops/sec |        48,194 ops/sec |        16,140 ops/sec |
-| Polyglot       |         3,769 ops/sec |         3,563 ops/sec |         3,220 ops/sec |         3,196 ops/sec |
-| **frenchkiss** | **4,023,760 ops/sec** | **2,286,641 ops/sec** | **3,042,214 ops/sec** | **1,383,317 ops/sec** |
+![i18n benchmark](./benchmark/benchmark.jpg)
 
 ---
 
