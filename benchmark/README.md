@@ -23,3 +23,9 @@ Using with [yarn](https://yarnpkg.com):
 Or using [npm](https://npmjs.org):
 
     $ npm start
+
+---
+
+## 📊 Opening benchmark chart
+
+    $ open ./result.html

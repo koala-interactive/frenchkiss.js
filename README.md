@@ -1,12 +1,15 @@
-# FrenchKiss.js
+<div align="center">
+  <h1>💋 FrenchKiss.js</h1>
 
 [![Build Status](https://travis-ci.com/koala-interactive/frenchkiss.js.svg?branch=master)](https://travis-ci.com/koala-interactive/frenchkiss.js)
 [![File size](https://img.shields.io/badge/GZIP%20size-1021%20B-brightgreen.svg)](./dist/umd/frenchkiss.js)
-![](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
+![](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
 ![](https://img.shields.io/snyk/vulnerabilities/github/koala-interactive/frenchkiss.js.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
-FrenchKiss.js is a blazing fast lightweight i18n helper library written in JavaScript, working both in the browser and NodeJS environments. It provides a simple and really fast solution for handling internationalization.
+</div>
+
+FrenchKiss.js is a blazing fast lightweight i18n library written in JavaScript, working both in the browser and NodeJS environments. It provides a simple and really fast solution for handling internationalization.
 
 FrenchKiss is by now, _the fastest i18n JS package_ out there, working **5 to 1000 times faster** than any others by **JIT compiling** the translations, try it by running the benchmarks !
 
@@ -39,6 +42,7 @@ Or install using [npm](https://npmjs.org):
     $ cd benchmark
     $ yarn
     $ yarn start
+    $ open ./result.html
 
 ![i18n benchmark](./benchmark/benchmark.jpg)
 
@@ -306,3 +310,10 @@ t('timeago', { minutes: 0, gender: 'male' }); // => 'Updated: just now'
 t('timeago', { minutes: 1, gender: 'male' }); // => 'Updated: one minute ago'
 t('timeago', { minutes: 5, gender: 'male' }); // => 'Updated: 5 minutes ago by male'
 ```
+
+---
+
+## 🔗 Related projects
+
+- [i18next-scanner](https://github.com/i18next/i18next-scanner): Scan your code, extract translation keys/values, and merge them into i18n resource files.
+- [i18n-extract](https://github.com/oliviertassinari/i18n-extract): Manage localization with static analysis. (report unused/missing/duplicated key, extract them).
