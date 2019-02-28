@@ -24,7 +24,8 @@ const escapeText = JSON.stringify; // (text) => '"' + text.replace(/(["\\])/g, '
  * @param {String} text
  * @returns {String}
  */
-const escapeVariable = text => '(p["' + text.trim() + '"]||"")';
+const escapeVariable = text =>
+  '(p["' + text + '"]||(p["' + text + '"]=="0"?0:""))';
 
 /**
  * Compile the translation to executable optimized function
@@ -77,7 +78,7 @@ function generateCode(parts, plural) {
     if (type === TYPE_TEXT && value) {
       code = escapeText(value);
     } else if (type === TYPE_VARIABLE) {
-      code = escapeVariable(value);
+      code = escapeVariable(value.trim());
     } else if (type === TYPE_EXPRESSION) {
       const variable = p[2];
       const cases = p[3];

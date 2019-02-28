@@ -110,6 +110,36 @@ describe('t', () => {
     expect(i18n.t('hello')).to.equal('Hi  and  !');
   });
 
+  it('interpolates with empty string if null or undefined', () => {
+    i18n.set('en', {
+      hello: 'Hi {name} !',
+    });
+
+    expect(
+      i18n.t('hello', {
+        name: null,
+      })
+    ).to.equal('Hi  !');
+
+    expect(
+      i18n.t('hello', {
+        name: undefined,
+      })
+    ).to.equal('Hi  !');
+  });
+
+  it('interpolates with 0 if string equal 0', () => {
+    i18n.set('en', {
+      msgs: '{count} message(s)',
+    });
+
+    expect(
+      i18n.t('msgs', {
+        count: 0,
+      })
+    ).to.equal('0 message(s)');
+  });
+
   it('interpolates the same placeholder multiple times', () => {
     i18n.set('en', {
       hello: 'Hi {name} and {name} !',
@@ -153,8 +183,7 @@ describe('t', () => {
 
   it('interpolates select with string and numbers', () => {
     i18n.set('en', {
-      number:
-        'Test {type,select,1{one} 2{two} other {infinity}}.',
+      number: 'Test {type,select,1{one} 2{two} other {infinity}}.',
     });
 
     expect(i18n.t('number', { type: '1' })).to.equal('Test one.');
