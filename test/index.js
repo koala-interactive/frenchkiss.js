@@ -388,7 +388,9 @@ describe('pluralize', () => {
     expect(i18n.t('takemymoney', { N: 0 })).to.equal('Take 0 dollar please.');
     expect(i18n.t('takemymoney', { N: 1 })).to.equal('Take 1 dollars please.');
     expect(i18n.t('takemymoney', { N: 2 })).to.equal('Take 2 dollar please.');
-    expect(i18n.t('takemymoney', { N: 5 })).to.equal('Take 5 dollar please.');
+    expect(i18n.t('takemymoney', { N: 5 })).to.equal(
+      'Take 5 dollars! Take it please.'
+    );
 
     i18n.locale('fr');
     expect(i18n.t('takemymoney', { N: 0 })).to.equal(

@@ -287,7 +287,7 @@ locale('en'); // rules to locale = 'en'
 t('takemymoney', { N: 0 }); // => "Take 0 dollar please."
 t('takemymoney', { N: 1 }); // => "Take 1 dollars please."
 t('takemymoney', { N: 2 }); // => "Take 2 dollar please."
-t('takemymoney', { N: 5 }); // => "Take 5 dollar please."
+t('takemymoney', { N: 5 }); // => "Take 5 dollars! Take it please."
 
 locale('fr'); // rules to locale = 'fr'
 t('takemymoney', { N: 0 }); // => "Prenez 0 dollar s'il vous plait."
