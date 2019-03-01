@@ -85,7 +85,7 @@ export const onMissingKey = fn => {
  * @returns {String}
  */
 export const locale = language => {
-  if (language) {
+  if (language && language !== _locale) {
     _locale = language;
   }
   return _locale;
@@ -98,7 +98,7 @@ export const locale = language => {
  * @returns {String}
  */
 export const fallback = language => {
-  if (language) {
+  if (language && language !== _fallback) {
     _fallback = language;
   }
   return _fallback;
