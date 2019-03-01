@@ -186,6 +186,8 @@ function parseExpression(text) {
 
     if (value === 'other') {
       defaultValue = result;
+    } else if (isPlural && value[0] === '=') {
+      cases.unshift([value, result]);
     } else {
       cases.push([value, result]);
     }
