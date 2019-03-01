@@ -406,4 +406,19 @@ describe('pluralize', () => {
       "Prenez 5 dollars! Prenez le s'il vous plait."
     );
   });
+
+  it('should respect priority', () => {
+    i18n.plural('en', () => 'one');
+    i18n.set('en', {
+      some_cats1:
+        'There {N,plural,=0{is no cat} one{is one cat} other{are {N} cats}} here.',
+      some_cats2:
+        'There {N,plural,one{is one cat} =0{is no cat} other{are {N} cats}} here.',
+    });
+
+    expect(i18n.t('some_cats1', { N: 0 })).to.equal('There is no cat here.');
+    expect(i18n.t('some_cats1', { N: 1 })).to.equal('There is one cat here.');
+    expect(i18n.t('some_cats2', { N: 0 })).to.equal('There is no cat here.');
+    expect(i18n.t('some_cats2', { N: 1 })).to.equal('There is one cat here.');
+  });
 });
