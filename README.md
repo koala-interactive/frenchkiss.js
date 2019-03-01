@@ -271,18 +271,29 @@ import { locale, set, t, plural } from 'frenchkiss';
 
 set('en', {
   takemymoney:
-    'Take {N} dollar{{N, plural, one{} =5{s! Take it} other{s}} please.',
+    'Take {N} dollar{N, plural, one{} =5{s! Take it} other{s}} please.',
+});
+set('fr', {
+  takemymoney:
+    "Prenez {N} dollar{N, plural, one{} =5{s! Prenez le} other{s}} s'il vous plait.",
 });
 
 // Set here your plural category function
 plural('en', n => (n !== 1 ? 'one' : 'other'));
-plural('fr', n => (n === 0 || i === 1 ? 'one' : 'other'));
+plural('fr', n => (n === 0 || n === 1 ? 'one' : 'other'));
 // etc.
 
-t('takemymoney', { N: 0 }); // => 'Take 0 dollar please.'
-t('takemymoney', { N: 1 }); // => 'Take 1 dollar please.'
-t('takemymoney', { N: 2 }); // => 'Take 2 dollars please.'
-t('takemymoney', { N: 5 }); // => 'Take 5 dollars! Take it please.'
+locale('en'); // rules to locale = 'en'
+t('takemymoney', { N: 0 }); // => "Take 0 dollar please."
+t('takemymoney', { N: 1 }); // => "Take 1 dollars please."
+t('takemymoney', { N: 2 }); // => "Take 2 dollar please."
+t('takemymoney', { N: 5 }); // => "Take 5 dollar please."
+
+locale('fr'); // rules to locale = 'fr'
+t('takemymoney', { N: 0 }); // => "Prenez 0 dollar s'il vous plait."
+t('takemymoney', { N: 1 }); // => "Prenez 1 dollar s'il vous plait."
+t('takemymoney', { N: 2 }); // => "Prenez 2 dollars s'il vous plait."
+t('takemymoney', { N: 5 }); // => "Prenez 5 dollars! Prenez le s'il vous plait."
 ```
 
 ---
