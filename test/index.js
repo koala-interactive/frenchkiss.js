@@ -368,4 +368,40 @@ describe('pluralize', () => {
       expect(i18n.t('test', { N })).to.equal('r' + N);
     });
   });
+
+  it('each language has it own pluralization rules', () => {
+    i18n.set('en', {
+      takemymoney:
+        'Take {N} dollar{N, plural, one{} =5{s! Take it} other{s}} please.',
+    });
+    i18n.set('fr', {
+      takemymoney:
+        "Prenez {N} dollar{N, plural, one{} =5{s! Prenez le} other{s}} s'il vous plait.",
+    });
+
+    // Set here your plural category function
+    i18n.plural('en', n => (n !== 1 ? 'one' : 'other'));
+    i18n.plural('fr', n => (n === 0 || n === 1 ? 'one' : 'other'));
+    // etc.
+
+    i18n.locale('en');
+    expect(i18n.t('takemymoney', { N: 0 })).to.equal('Take 0 dollar please.');
+    expect(i18n.t('takemymoney', { N: 1 })).to.equal('Take 1 dollars please.');
+    expect(i18n.t('takemymoney', { N: 2 })).to.equal('Take 2 dollar please.');
+    expect(i18n.t('takemymoney', { N: 5 })).to.equal('Take 5 dollar please.');
+
+    i18n.locale('fr');
+    expect(i18n.t('takemymoney', { N: 0 })).to.equal(
+      "Prenez 0 dollar s'il vous plait."
+    );
+    expect(i18n.t('takemymoney', { N: 1 })).to.equal(
+      "Prenez 1 dollar s'il vous plait."
+    );
+    expect(i18n.t('takemymoney', { N: 2 })).to.equal(
+      "Prenez 2 dollars s'il vous plait."
+    );
+    expect(i18n.t('takemymoney', { N: 5 })).to.equal(
+      "Prenez 5 dollars! Prenez le s'il vous plait."
+    );
+  });
 });
