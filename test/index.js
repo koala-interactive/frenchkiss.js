@@ -370,6 +370,7 @@ describe('pluralize', () => {
   });
 
   it('should respect priority', () => {
+    i18n.locale('en');
     i18n.plural('en', () => 'one');
     i18n.set('en', {
       some_cats1:
