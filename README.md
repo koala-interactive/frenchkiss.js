@@ -245,10 +245,10 @@ It's basically the same as select, except you have to use the "=" symbol for dir
 ```js
 set('en', {
   bought_apple:
-    'I {count, plural, =0{did not bought apples} =1{bought one apple} other{bought {count} apples}}!',
+    'I {count, plural, =0{bought no apples} =1{bought one apple} other{bought {count} apples}}!',
 });
 
-t('bought_apple', { count: 0 }); // => 'I did not bought apples!'
+t('bought_apple', { count: 0 }); // => 'I bought no apples!'
 t('bought_apple', { count: 1 }); // => 'I bought one apple!'
 t('bought_apple', { count: 5 }); // => 'I bought 5 apples!'
 ```
