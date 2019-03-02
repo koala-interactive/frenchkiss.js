@@ -2,7 +2,7 @@
   <h1>💋 FrenchKiss.js</h1>
 
 [![Build Status](https://travis-ci.com/koala-interactive/frenchkiss.js.svg?branch=master)](https://travis-ci.com/koala-interactive/frenchkiss.js)
-[![File size](https://img.shields.io/badge/GZIP%20size-1028%20B-brightgreen.svg)](./dist/umd/frenchkiss.js)
+[![File size](https://img.shields.io/badge/GZIP%20size-1087%20B-brightgreen.svg)](./dist/umd/frenchkiss.js)
 ![](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
 ![](https://img.shields.io/snyk/vulnerabilities/github/koala-interactive/frenchkiss.js.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
@@ -57,6 +57,7 @@ Or install using [npm](https://npmjs.org):
 - [frenchkiss.unset()](#frenchkiss.unsetlanguage-string)
 - [frenchkiss.fallback()](#frenchkissfallbacklanguage-string-string)
 - [frenchkiss.onMissingKey()](#frenchkissonMissingKeyfn-Function)
+- [frenchkiss.onMissingVariable()](#frenchkissonMissingVariablefn-Function)
 - [SELECT expression](#select-expression)
 - [PLURAL expression](#plural-expression)
 - [Plural category](#plural-category)
@@ -211,6 +212,31 @@ frenchkiss.onMissingKey(key => {
 });
 
 frenchkiss.t('missingkey'); // => 'An error happened (missingkey)'
+```
+
+---
+
+### frenchkiss.onMissingVariable(fn: Function)
+
+It's possible to handle missing variables, sending errors to your monitoring server or handle it directly by returning something to replace with.
+
+```js
+frenchkiss.set('en', {
+  hello: 'Hello {name} !',
+});
+frenchkiss.locale('en');
+
+frenchkiss.t('hello'); // => 'Hello  !'
+
+frenchkiss.onMissingVariable((variable, key, language) => {
+  // Send error to your server
+  sendReport(`Missing the variable "${variable}" in ${language}->${key}.`);
+
+  // Returns the text you want
+  return `[missing:${variable}]`;
+});
+
+frenchkiss.t('hello'); // => 'Hello [missing:name] !'
 ```
 
 ---

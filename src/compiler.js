@@ -19,13 +19,22 @@ const escapeText = JSON.stringify; // (text) => '"' + text.replace(/(["\\])/g, '
 
 /**
  * Helper to bind variable name to value.
- * Default to empty string if not defined
+ * Default to onMissingVariable returns if not defined
+ *
+ * Mapping :
+ * - undefined -> ''
+ * - null -> ''
+ * - 0 -> 0
+ * - 155 -> 155
+ * - 'test' -> 'test'
+ * - not defined -> onMissingVariable(value, key, language)
  *
  * @param {String} text
  * @returns {String}
  */
 const escapeVariable = text =>
-  '(p["' + text + '"]||(p["' + text + '"]=="0"?0:""))';
+  // prettier-ignore
+  '(p["' + text + '"]||(p["' + text + '"]=="0"?0:"' + text + '" in p?"":v("' + text + '",k,l)))';
 
 /**
  * Compile the translation to executable optimized function
@@ -48,8 +57,11 @@ export function compileCode(text) {
   }
 
   return new Function(
-    'a',
-    'f',
+    'a', // params
+    'f', // plural category function
+    'k', // key
+    'l', // language
+    'v', // missingVariableHandler
     'var p=a||{}' +
       (size ? ',m=f?{' + pluralCode + '}:{}' : '') +
       ';return ' +

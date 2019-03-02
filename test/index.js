@@ -1,5 +1,8 @@
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
+import spies from 'chai-spies';
 import i18n from '../src/frenchkiss';
+
+chai.use(spies);
 
 describe('locale', () => {
   it('should not bug if no locale', () => {
@@ -237,6 +240,7 @@ describe('t', () => {
 describe('onMissingKey', () => {
   beforeEach(() => {
     i18n.locale('en');
+    i18n.fallback('xyz');
   });
 
   afterEach(() => {
@@ -245,6 +249,15 @@ describe('onMissingKey', () => {
 
   it('returns the key if translation not found', () => {
     expect(i18n.t('bogus_key')).to.equal('bogus_key');
+  });
+
+  it('is called with key', () => {
+    const fn = chai.spy(() => '');
+
+    i18n.onMissingKey(fn);
+    i18n.t('bogus_key');
+
+    expect(fn).to.have.been.called.with('bogus_key');
   });
 
   it('replace the key with something custom when not found', () => {
@@ -258,6 +271,42 @@ describe('onMissingKey', () => {
       empty: '',
     });
     expect(i18n.t('empty')).to.equal('');
+  });
+});
+
+describe('onMissingVariable', () => {
+  beforeEach(() => {
+    i18n.locale('en');
+    i18n.set('en', {
+      test: 'Test {value} !',
+    });
+  });
+
+  afterEach(() => {
+    i18n.onMissingVariable(() => '');
+  });
+
+  it('returns empty string if variable not found', () => {
+    expect(i18n.t('test')).to.equal('Test  !');
+  });
+
+  it('returns empty string if variable not found', () => {
+    i18n.onMissingVariable(value => `[${value}]`);
+    expect(i18n.t('test', { value: '' })).to.equal('Test  !');
+  });
+
+  it('call onMissingVariable with parameters', () => {
+    const fn = chai.spy(() => '');
+
+    i18n.onMissingVariable(fn);
+    i18n.t('test');
+
+    expect(fn).to.have.been.called.with('value', 'test', 'en');
+  });
+
+  it('replace the variable with something custom when not found', () => {
+    i18n.onMissingVariable(value => `[${value}]`);
+    expect(i18n.t('test')).to.equal('Test [value] !');
   });
 });
 
