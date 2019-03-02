@@ -19,6 +19,17 @@ let _fallback = '';
 let missingKeyHandler = key => key;
 
 /**
+ * Default function used in case of missing variable
+ * Returns the value you want
+ *
+ * @param {String} variable
+ * @param {String} key
+ * @param {String} language
+ * @returns {String}
+ */
+let missingVariableHandler = () => '';
+
+/**
  * Get back a translation and returns the optimized function
  * Store the function in the cache to re-use it
  *
@@ -54,17 +65,27 @@ export const t = (key, params, language) => {
   let fn,
     lang = language || _locale;
 
+  // Try to get the specified or locale
   if (lang) {
     fn = getCompiledCode(key, lang);
+
+    if (fn) {
+      return fn(params, _plural[lang], key, lang, missingVariableHandler);
+    }
   }
+
+  lang = _fallback;
 
   // Try to get the fallback language
-  if (!fn && _fallback) {
-    lang = _fallback;
+  if (lang) {
     fn = getCompiledCode(key, lang);
+
+    if (fn) {
+      return fn(params, _plural[lang], key, lang, missingVariableHandler);
+    }
   }
 
-  return fn ? fn(params, _plural[lang]) : missingKeyHandler(key);
+  return missingKeyHandler(key);
 };
 
 /**
@@ -76,6 +97,17 @@ export const t = (key, params, language) => {
  */
 export const onMissingKey = fn => {
   missingKeyHandler = fn;
+};
+
+/**
+ * Set a function to handle missing variable to:
+ * - Returns the value you want
+ * - Report the poblem to your server
+ *
+ * @param {Function} fn
+ */
+export const onMissingVariable = fn => {
+  missingVariableHandler = fn;
 };
 
 /**
@@ -171,6 +203,7 @@ export default {
   store,
   t,
   onMissingKey,
+  onMissingVariable,
   locale,
   fallback,
   set,
