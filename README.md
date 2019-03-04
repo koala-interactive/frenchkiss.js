@@ -120,7 +120,7 @@ Here is what you should know about it :
 - ✅ It supports `SELECT`.
 - ✅ It supports nested `PLURAL`, `SELECT` and `variables`.
 - ❌ It does not support nested keys _(to keep it fast)_.
-- ❌ It does not support date, number, devise formatting (maybe check for [Intl.NumberFormat](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/NumberFormat) and [Intl.DateTimeFormat](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/DateTimeFormat)).
+- ❌ It does not support date, number, currency formatting (maybe check for [Intl.NumberFormat](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/NumberFormat) and [Intl.DateTimeFormat](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/DateTimeFormat)).
 
 ```js
 set('en', {
