@@ -37,21 +37,11 @@ let missingVariableHandler = () => '';
  * @param {String} language
  * @returns {Function|null}
  */
-const getCompiledCode = (key, language) => {
-  if (!cache[language]) {
-    cache[language] = {};
-  }
-
-  if (
-    !cache[language][key] &&
-    store[language] &&
-    typeof store[language][key] === 'string'
-  ) {
-    cache[language][key] = compileCode(store[language][key]);
-  }
-
-  return cache[language][key];
-};
+const getCompiledCode = (key, language) =>
+  (cache[language] && cache[language][key]) ||
+  (store[language] &&
+    typeof store[language][key] === 'string' &&
+    (cache[language][key] = compileCode(store[language][key])));
 
 /**
  * Get back translation and interpolate values stored in 'params' parameter
