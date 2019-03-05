@@ -305,14 +305,22 @@ set('fr', {
 });
 
 // Set here your plural category function
-plural('en', n => (n !== 1 ? 'one' : 'other'));
-plural('fr', n => (n === 0 || n === 1 ? 'one' : 'other'));
+plural('en', n => {
+  const i = Math.floor(Math.abs(n));
+  const v = n.toString().replace(/^[^.]*\.?/, '').length;
+  return i === 1 && v === 0 ? 'one' : 'other';
+});
+
+plural('fr', n => {
+  const i = Math.floor(Math.abs(n));
+  return i === 0 || i === 1 ? 'one' : 'other';
+});
 // etc.
 
 locale('en'); // rules to locale = 'en'
-t('takemymoney', { N: 0 }); // => "Take 0 dollar please."
-t('takemymoney', { N: 1 }); // => "Take 1 dollars please."
-t('takemymoney', { N: 2 }); // => "Take 2 dollar please."
+t('takemymoney', { N: 0 }); // => "Take 0 dollars please."
+t('takemymoney', { N: 1 }); // => "Take 1 dollar please."
+t('takemymoney', { N: 2 }); // => "Take 2 dollars please."
 t('takemymoney', { N: 5 }); // => "Take 5 dollars! Take it please."
 
 locale('fr'); // rules to locale = 'fr'

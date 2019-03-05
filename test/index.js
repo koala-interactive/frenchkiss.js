@@ -429,14 +429,22 @@ describe('pluralize', () => {
     });
 
     // Set here your plural category function
-    i18n.plural('en', n => (n !== 1 ? 'one' : 'other'));
-    i18n.plural('fr', n => (n === 0 || n === 1 ? 'one' : 'other'));
+    i18n.plural('en', n => {
+      const i = Math.floor(Math.abs(n));
+      const v = n.toString().replace(/^[^.]*\.?/, '').length;
+      return i === 1 && v === 0 ? 'one' : 'other';
+    });
+
+    i18n.plural('fr', n => {
+      const i = Math.floor(Math.abs(n));
+      return i === 0 || i === 1 ? 'one' : 'other';
+    });
     // etc.
 
     i18n.locale('en');
-    expect(i18n.t('takemymoney', { N: 0 })).to.equal('Take 0 dollar please.');
-    expect(i18n.t('takemymoney', { N: 1 })).to.equal('Take 1 dollars please.');
-    expect(i18n.t('takemymoney', { N: 2 })).to.equal('Take 2 dollar please.');
+    expect(i18n.t('takemymoney', { N: 0 })).to.equal('Take 0 dollars please.');
+    expect(i18n.t('takemymoney', { N: 1 })).to.equal('Take 1 dollar please.');
+    expect(i18n.t('takemymoney', { N: 2 })).to.equal('Take 2 dollars please.');
     expect(i18n.t('takemymoney', { N: 5 })).to.equal(
       'Take 5 dollars! Take it please.'
     );
