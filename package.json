@@ -1,6 +1,6 @@
 {
   "name": "frenchkiss",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "The blazing fast lightweight translation module for javascript",
   "author": "Vincent Thibault <vthibault.mobile@gmail.com>",
   "license": "MIT",
@@ -10,7 +10,8 @@
     "./dist/cjs/frenchkiss.js": "./dist/umd/frenchkiss.js"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "index.d.ts"
   ],
   "bugs": {
     "url": "https://github.com/koala-interactive/frenchkiss.js/issues"
