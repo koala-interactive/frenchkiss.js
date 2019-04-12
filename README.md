@@ -17,6 +17,10 @@ FrenchKiss is by now, _the fastest i18n JS package_ out there, working **5 to 10
 >
 > ![Node 0.10](https://img.shields.io/badge/node-0.10-blue.svg) ![IE 9](https://img.shields.io/badge/IE-9-blue.svg)
 
+⚠️  Frenchkiss is internaly using `new Function()` to create optimized functions. Therefore it can conflict when using [CSP (Content Security Policy)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) rules.
+You can bypass it by disabling it by using the CSP keyword `unsafe-eval`, but it is generally not recommended as it would weaken the protections offered by CSP.
+We will eventually work on a new version offering pre-compilation.
+
 ---
 
 ## 🚀 Installation
