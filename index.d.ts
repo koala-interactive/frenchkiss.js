@@ -8,7 +8,7 @@ declare module 'frenchkiss' {
   ) => string;
 
   interface StoreData {
-    [key: string]: string | number;
+    [key: string]: string | number | StoreData;
   }
 
   interface CacheData {
@@ -21,16 +21,12 @@ declare module 'frenchkiss' {
     ) => string;
   }
 
-  interface StoreItems {
-    [key: string]: StoreData;
-  }
-
   interface CacheItems {
     [key: string]: CacheData;
   }
 
   export const cache: CacheItems;
-  export const store: StoreItems;
+  export const store: StoreData;
   export function t(key: string, params?: object, language?: string): string;
   export function onMissingKey(
     missingKeyHandler: (key: string) => string

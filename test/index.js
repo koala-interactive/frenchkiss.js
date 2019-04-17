@@ -88,6 +88,14 @@ describe('t', () => {
     ).to.equal('Hi Vince and Anna !');
   });
 
+  it('interpolates array', () => {
+    i18n.set('en', {
+      hello: 'Hi {0} and {1} !',
+    });
+
+    expect(i18n.t('hello', ['Vince', 'Anna'])).to.equal('Hi Vince and Anna !');
+  });
+
   it('interpolates with specified language (argument 3)', () => {
     i18n.set('fr', {
       hello: 'Bonjour {name1} et {name2} !',
@@ -234,6 +242,147 @@ describe('t', () => {
     expect(i18n.t('all_pets_color', { animal: 'dog' })).to.equal(
       'All my dogs.'
     );
+  });
+});
+
+describe('nested keys', () => {
+  beforeEach(() => {
+    i18n.locale('en');
+  });
+
+  describe('t', () => {
+    it('translates a simple string', () => {
+      i18n.set('en', {
+        hello: {
+          you: 'Hello you',
+        },
+      });
+
+      expect(i18n.t('hello.you')).to.equal('Hello you');
+    });
+
+    it('translates a simple sub nested string', () => {
+      i18n.set('en', {
+        hello: {
+          you: {
+            are: 'Hello you are',
+          },
+        },
+      });
+
+      expect(i18n.t('hello.you.are')).to.equal('Hello you are');
+    });
+
+    it('does not translates object', () => {
+      i18n.set('en', {
+        hello: {
+          you: 'Hello you',
+        },
+      });
+
+      expect(i18n.t('hello')).to.equal('hello');
+    });
+
+    it('does not TypeError on overflow', () => {
+      i18n.set('en', {
+        hello: {
+          you: 'Hello you',
+        },
+      });
+
+      expect(i18n.t('hello.undefined.typerror')).to.equal(
+        'hello.undefined.typerror'
+      );
+    });
+
+    it('does not allow escaping', () => {
+      i18n.set('en', {
+        hello: {
+          you: 'Hello you',
+        },
+      });
+
+      expect(i18n.t('hello.constructor.constructor.name')).to.equal(
+        'hello.constructor.constructor.name'
+      );
+    });
+
+    it('priorize key before nested keys', () => {
+      i18n.set('en', {
+        'hello.you': 'a',
+        hello: {
+          you: 'b',
+        },
+      });
+
+      expect(i18n.t('hello.you')).to.equal('a');
+    });
+  });
+
+  describe('set', () => {
+    it('reset cache', () => {
+      i18n.set('en', {
+        hello: {
+          you: 'Hello you',
+        },
+      });
+
+      i18n.t('hello.you');
+
+      i18n.set('en', {
+        hello: {
+          me: 'Hello me',
+        },
+      });
+
+      expect(i18n.cache.en['hello.you']).to.be.undefined;
+    });
+  });
+
+  describe('extends', () => {
+    it('extends', () => {
+      i18n.set('en', {
+        hello: {
+          you: 'Hello you',
+        },
+      });
+
+      i18n.t('hello.you');
+
+      i18n.extend('en', {
+        hello: {
+          me: 'Hello me',
+        },
+      });
+
+      expect(i18n.store.en.hello.you).to.exist;
+      expect(i18n.store.en.hello.me).to.exist;
+      expect(i18n.cache.en['hello.you']).to.exist;
+    });
+
+    it('reset cache', () => {
+      i18n.set('en', {
+        hello: {
+          you: 'Hello you',
+        },
+      });
+
+      i18n.t('hello.you');
+
+      i18n.extend('en', {
+        hello: {
+          me: 'Hello me',
+        },
+      });
+
+      expect(i18n.cache.en['hello.you']).to.exist;
+
+      i18n.extend('en', {
+        hello: 'hello',
+      });
+
+      expect(i18n.cache.en['hello.you']).to.be.undefined;
+    });
   });
 });
 
