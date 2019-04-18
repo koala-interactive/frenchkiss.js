@@ -30,8 +30,7 @@ let missingKeyHandler = key => key;
 let missingVariableHandler = () => '';
 
 /**
- * Get back a translation and returns the optimized function
- * Store the function in the cache to re-use it
+ * Get compiled code from cache or ask to generate it
  *
  * @param {String} key
  * @param {String} language
@@ -39,9 +38,43 @@ let missingVariableHandler = () => '';
  */
 const getCompiledCode = (key, language) =>
   (cache[language] && cache[language][key]) ||
-  (store[language] &&
-    typeof store[language][key] === 'string' &&
-    (cache[language][key] = compileCode(store[language][key])));
+  generateCompiledCode(key, language);
+
+/**
+ * Get back the translation key, compile the code and
+ * store it into the cache
+ *
+ * @param {String} key
+ * @param {String} language
+ * @returns {Function|null}
+ */
+const generateCompiledCode = (key, language) => {
+  let value = store[language];
+
+  if (value) {
+    // Direct assignment before resolving nested keys
+    if (typeof value[key] === 'string') {
+      value = value[key];
+    } else {
+      const keys = key.split('.');
+      const count = keys.length;
+
+      for (let i = 0; i < count; ++i) {
+        if (!value.hasOwnProperty(keys[i])) {
+          return null;
+        }
+
+        value = value[keys[i]];
+      }
+    }
+
+    if (typeof value === 'string') {
+      return (cache[language][key] = compileCode(value));
+    }
+  }
+
+  return null;
+};
 
 /**
  * Get back translation and interpolate values stored in 'params' parameter
@@ -164,13 +197,52 @@ export const extend = (language, table) => {
     cache[language] = {};
   }
 
+  extendStoreRecursive(store[language], table, cache[language], '');
+};
+
+/**
+ * Helper to extends store recursively
+ *
+ * @param {Object} store
+ * @param {Object} table
+ * @param {Object} cache
+ * @param {String} prefix
+ * @internal
+ */
+const extendStoreRecursive = (store, table, cache, prefix) => {
   const keys = Object.keys(table);
   const count = keys.length;
 
   for (let i = 0; i < count; ++i) {
     const key = keys[i];
-    store[language][key] = table[key];
-    delete cache[language][key];
+    const cacheKey = prefix ? prefix + '.' + key : key;
+
+    if (typeof table[key] === 'object') {
+      if (typeof store[key] !== 'object') {
+        store[key] = {};
+      }
+
+      extendStoreRecursive(store[key], table[key], cache, cacheKey);
+    } else {
+      delete cache[cacheKey];
+
+      // If store is an object, we need to erase all cached functions matching /key\..*/
+      if (typeof store[key] === 'object') {
+        const cacheMatch = cacheKey + '.';
+        const cacheLength = cacheMatch.length;
+        const keys = Object.keys(cache);
+        const count = keys.length;
+
+        for (let i = 0; i < count; ++i) {
+          const key = keys[i];
+          if (key.substr(0, cacheLength) === cacheMatch) {
+            delete cache[key];
+          }
+        }
+      }
+
+      store[key] = table[key];
+    }
   }
 };
 

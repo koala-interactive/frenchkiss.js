@@ -2,7 +2,7 @@
   <h1>💋 FrenchKiss.js</h1>
 
 [![Build Status](https://travis-ci.com/koala-interactive/frenchkiss.js.svg?branch=master)](https://travis-ci.com/koala-interactive/frenchkiss.js)
-[![File size](https://img.shields.io/badge/GZIP%20size-1076%20B-brightgreen.svg)](./dist/umd/frenchkiss.js)
+[![File size](https://img.shields.io/badge/GZIP%20size-1.2%20kB-brightgreen.svg)](./dist/umd/frenchkiss.js)
 ![](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
 ![](https://img.shields.io/snyk/vulnerabilities/github/koala-interactive/frenchkiss.js.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
@@ -62,6 +62,7 @@ Or install using [npm](https://npmjs.org):
 - [frenchkiss.fallback()](#frenchkissfallbacklanguage-string-string)
 - [frenchkiss.onMissingKey()](#frenchkissonMissingKeyfn-Function)
 - [frenchkiss.onMissingVariable()](#frenchkissonMissingVariablefn-Function)
+- [Nested keys](#nested-keys)
 - [SELECT expression](#select-expression)
 - [PLURAL expression](#plural-expression)
 - [Plural category](#plural-category)
@@ -80,13 +81,17 @@ frenchkiss.locale('en');
 // Add translations in each languages
 frenchkiss.set('en', {
   hello: 'Hello {name} !',
-  goodbye: 'Bye !',
+  fruits: {
+    apple: 'apples'
+  },
   // and other sentences...
 });
 
 frenchkiss.t('hello', {
   name: 'John',
 }); // => 'Hello John !'
+
+frenchkiss.t('fruits.apple'); // => 'apples'
 ```
 
 ---
@@ -123,7 +128,7 @@ Here is what you should know about it :
 - ✅ It supports `PLURAL`.
 - ✅ It supports `SELECT`.
 - ✅ It supports nested `PLURAL`, `SELECT` and `variables`.
-- ❌ It does not support nested keys _(to keep it fast)_.
+- ✅ It supports nested keys (using dots in keys).
 - ❌ It does not support date, number, currency formatting (maybe check for [Intl.NumberFormat](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/NumberFormat) and [Intl.DateTimeFormat](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/DateTimeFormat)).
 
 ```js
@@ -241,6 +246,54 @@ frenchkiss.onMissingVariable((variable, key, language) => {
 });
 
 frenchkiss.t('hello'); // => 'Hello [missing:name] !'
+```
+
+---
+
+### Nested keys
+
+Under the hood, frenchkiss allows you to handle nested keys, by using `'.'` inside key names.
+
+```js
+frenchkiss.set('en', {
+  fruits: {
+    apple: 'An apple',
+    banana: 'A banana'
+  },
+  vegetables: {
+    carrot: 'A carrot',
+    daikon: 'A daikon'
+  }
+});
+
+frenchkiss.t('fruits.apple') // => 'An apple'
+```
+
+Accessing an object directly will result on the `onMissingKey` method to be called:
+
+```js
+frenchkiss.set('en', {
+  fruits: {
+    apple: 'An apple',
+    banana: 'A banana'
+  }
+});
+
+frenchkiss.onMissingKey(key => `[notfound:${key}]`);
+frenchkiss.t('fruits'); // => '[notfound:fruits]'
+```
+
+In case of duplicate names on key and objects, the result will always prioritize the key value.
+
+```js
+frenchkiss.set('en', {
+  'fruits.apple': '(linear) apple'
+  fruits: {
+    apple: '(nested) apple'
+  }
+});
+
+frenchkiss.t('fruits.apple'); // => '(linear) apple'
 ```
 
 ---
