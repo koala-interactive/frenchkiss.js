@@ -62,6 +62,7 @@ Or install using [npm](https://npmjs.org):
 - [frenchkiss.fallback()](#frenchkissfallbacklanguage-string-string)
 - [frenchkiss.onMissingKey()](#frenchkissonMissingKeyfn-Function)
 - [frenchkiss.onMissingVariable()](#frenchkissonMissingVariablefn-Function)
+- [Nested keys](#nested-keys)
 - [SELECT expression](#select-expression)
 - [PLURAL expression](#plural-expression)
 - [Plural category](#plural-category)
@@ -245,6 +246,54 @@ frenchkiss.onMissingVariable((variable, key, language) => {
 });
 
 frenchkiss.t('hello'); // => 'Hello [missing:name] !'
+```
+
+---
+
+### Nested keys
+
+Under the hood, frenchkiss allows you to handle nested keys, by using `'.'` inside key names.
+
+```js
+frenchkiss.set('en', {
+  fruits: {
+    apple: 'An apple',
+    banana: 'A banana'
+  },
+  vegetables: {
+    carrot: 'A carrot',
+    daikon: 'A daikon'
+  }
+});
+
+frenchkiss.t('fruits.apple') // => 'An apple'
+```
+
+Accessing an object directly will result on the `onMissingKey` method to be called:
+
+```js
+frenchkiss.set('en', {
+  fruits: {
+    apple: 'An apple',
+    banana: 'A banana'
+  }
+});
+
+frenchkiss.onMissingKey(key => `[notfound:${key}]`);
+frenchkiss.t('fruits'); // => '[notfound:fruits]'
+```
+
+In case of duplicate names on key and objects, the result will always prioritize the key value.
+
+```js
+frenchkiss.set('en', {
+  'fruits.apple': '(linear) apple'
+  fruits: {
+    apple: '(nested) apple'
+  }
+});
+
+frenchkiss.t('fruits.apple'); // => '(linear) apple'
 ```
 
 ---
