@@ -306,37 +306,6 @@ describe('nested keys', () => {
         'hello.constructor.constructor.name'
       );
     });
-
-    it('priorize key before nested keys', () => {
-      i18n.set('en', {
-        'hello.you': 'a',
-        hello: {
-          you: 'b',
-        },
-      });
-
-      expect(i18n.t('hello.you')).to.equal('a');
-    });
-  });
-
-  describe('set', () => {
-    it('reset cache', () => {
-      i18n.set('en', {
-        hello: {
-          you: 'Hello you',
-        },
-      });
-
-      i18n.t('hello.you');
-
-      i18n.set('en', {
-        hello: {
-          me: 'Hello me',
-        },
-      });
-
-      expect(i18n.cache.en['hello.you']).to.be.undefined;
-    });
   });
 
   describe('extends', () => {
@@ -355,33 +324,9 @@ describe('nested keys', () => {
         },
       });
 
-      expect(i18n.store.en.hello.you).to.exist;
-      expect(i18n.store.en.hello.me).to.exist;
+      expect(i18n.store.en['hello.you']).to.exist;
+      expect(i18n.store.en['hello.me']).to.exist;
       expect(i18n.cache.en['hello.you']).to.exist;
-    });
-
-    it('reset cache', () => {
-      i18n.set('en', {
-        hello: {
-          you: 'Hello you',
-        },
-      });
-
-      i18n.t('hello.you');
-
-      i18n.extend('en', {
-        hello: {
-          me: 'Hello me',
-        },
-      });
-
-      expect(i18n.cache.en['hello.you']).to.exist;
-
-      i18n.extend('en', {
-        hello: 'hello',
-      });
-
-      expect(i18n.cache.en['hello.you']).to.be.undefined;
     });
   });
 });
@@ -507,9 +452,18 @@ describe('extend', () => {
     expect(i18n.cache.en.a).to.exist;
     expect(i18n.cache.en.b).to.exist;
 
-    i18n.extend('en', { a: 'a' });
+    i18n.extend('en', { a: 'c' });
     expect(i18n.cache.en.a).to.be.undefined;
     expect(i18n.cache.en.b).to.exist;
+  });
+
+  it('should keep cache of erased keys with same values', () => {
+    i18n.extend('en', { a: 'a' });
+    i18n.t('a');
+    expect(i18n.cache.en.a).to.exist;
+
+    i18n.extend('en', { a: 'a' });
+    expect(i18n.cache.en.a).to.exist;
   });
 
   it('should set if no cache defined', () => {

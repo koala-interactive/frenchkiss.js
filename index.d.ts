@@ -25,8 +25,12 @@ declare module 'frenchkiss' {
     [key: string]: CacheData;
   }
 
+  interface StoreItems {
+    [key: string]: string | number;
+  }
+
   export const cache: CacheItems;
-  export const store: StoreData;
+  export const store: StoreItems;
   export function t(key: string, params?: object, language?: string): string;
   export function onMissingKey(
     missingKeyHandler: (key: string) => string
