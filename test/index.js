@@ -409,6 +409,16 @@ describe('onMissingKey', () => {
     expect(fn).to.have.been.called.with('bogus_key');
   });
 
+  it('is called with key, params, locale', () => {
+    const fn = chai.spy(() => '');
+    const params = { test: 5 };
+
+    i18n.onMissingKey(fn);
+    i18n.t('bogus_key', params, 'en');
+
+    expect(fn).to.have.been.called.with('bogus_key', params, 'en');
+  });
+
   it('replace the key with something custom when not found', () => {
     i18n.onMissingKey(key => 'missing:' + key);
     expect(i18n.t('bogus_key')).to.equal('missing:bogus_key');

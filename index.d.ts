@@ -7,6 +7,12 @@ declare module 'frenchkiss' {
     language: string
   ) => string;
 
+  type missingKeyHandler = (
+    key: string,
+    params: string,
+    language: string
+  ) => string;
+
   interface StoreData {
     [key: string]: string | number | StoreData;
   }
@@ -29,7 +35,7 @@ declare module 'frenchkiss' {
   export const store: StoreData;
   export function t(key: string, params?: object, language?: string): string;
   export function onMissingKey(
-    missingKeyHandler: (key: string) => string
+    missingKeyHandler: missingKeyHandler
   ): void;
   export function onMissingVariable(
     missingVariableHandler: missingVariableHandler
