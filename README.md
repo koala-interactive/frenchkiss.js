@@ -212,7 +212,7 @@ When the client requests a missing key, frenchKiss will returns the key as resul
 ```js
 frenchkiss.t('missingkey'); // => 'missingkey'
 
-frenchkiss.onMissingKey(key => {
+frenchkiss.onMissingKey((key, params, locale) => {
   // Send error to your server
   sendReport(`Missing the key "${key}" in ${frenchkiss.locale()} language.`);
 

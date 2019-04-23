@@ -108,7 +108,7 @@ export const t = (key, params, language) => {
     }
   }
 
-  return missingKeyHandler(key);
+  return missingKeyHandler(key, params, language || _locale);
 };
 
 /**
