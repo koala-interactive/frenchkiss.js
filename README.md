@@ -283,17 +283,23 @@ frenchkiss.onMissingKey(key => `[notfound:${key}]`);
 frenchkiss.t('fruits'); // => '[notfound:fruits]'
 ```
 
-In case of duplicate names on key and objects, the result will always prioritize the key value.
+In case of duplicate names on key and objects, do not expect the result to be uniform (in fact, just don't do it).
 
 ```js
 frenchkiss.set('en', {
-  'fruits.apple': '(linear) apple'
-  fruits: {
-    apple: '(nested) apple'
+  'fruits.apple.green': 1,
+  'fruits.apple': {
+    'green': 2
+  },
+  'fruits': {
+    'apple.green': 3
+    'apple': {
+      'green': 4
+    }
   }
 });
 
-frenchkiss.t('fruits.apple'); // => '(linear) apple'
+frenchkiss.t('fruits.apple.green'); // => '1' or '2' or '3' or '4'
 ```
 
 ---
