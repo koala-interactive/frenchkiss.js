@@ -132,10 +132,34 @@ export const fallback = language => {
  * @param {Object} table
  */
 export const set = (language, table) => {
-  cache[language] = {};
-  store[language] = {};
+  flattenObjectKeys(table, table, '');
 
-  extend(language, table);
+  cache[language] = {};
+  store[language] = table;
+};
+
+/**
+ * Flatten keys for flat object { [string]: string }
+ *
+ * @param {Object} table
+ * @param {Object} data
+ * @param {String} prefix
+ */
+const flattenObjectKeys = (table, data, prefix) => {
+  const keys = Object.keys(data);
+  const count = keys.length;
+
+  for (let i = 0; i < count; ++i) {
+    const key = keys[i];
+    const prefixKey = prefix + key;
+
+    if (typeof data[key] === 'object') {
+      flattenObjectKeys(table, data[key], prefixKey + '.');
+      delete table[key];
+    } else {
+      table[prefixKey] = String(data[key]);
+    }
+  }
 };
 
 /**
@@ -189,7 +213,7 @@ const extendStoreRecursive = (store, cache, table, prefix) => {
       extendStoreRecursive(store, cache, table[key], targetKey + '.');
     } else if (store[targetKey] !== table[key]) {
       delete cache[targetKey];
-      store[targetKey] = table[key];
+      store[targetKey] = String(table[key]);
     }
   }
 };

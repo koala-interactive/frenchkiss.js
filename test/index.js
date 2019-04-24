@@ -75,6 +75,14 @@ describe('t', () => {
     expect(i18n.t('hello')).to.equal('Hello');
   });
 
+  it('translates numbers', () => {
+    i18n.set('en', {
+      a: 5,
+    });
+
+    expect(i18n.t('a')).to.equal('5');
+  });
+
   it('interpolates', () => {
     i18n.set('en', {
       hello: 'Hi {name1} and {name2} !',
