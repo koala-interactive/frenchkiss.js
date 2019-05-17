@@ -45,7 +45,7 @@ declare module 'frenchkiss' {
     missingVariableHandler: missingVariableHandler
   ): void;
   export function locale(language?: string): string;
-  export function fallback(language: string): string;
+  export function fallback(language?: string): string;
   export function unset(language: string): void;
   export function set(language: string, table: StoreData): void;
   export function extend(language: string, table: StoreData): void;
