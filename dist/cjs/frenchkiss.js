@@ -1,5 +1,5 @@
 /**
- * @license frenchkiss 0.2.0
+ * @license frenchkiss 0.2.1
  * Copyright (c) 2018-2019 Koala Interactive, Inc.
  * License: MIT
  */
