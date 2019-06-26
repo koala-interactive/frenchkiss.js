@@ -120,7 +120,7 @@ frenchkiss.set('en', {
 
 ### frenchkiss.t(key: string, params?: object, lang?: string): string
 
-The most used method to returns translation. It's built with performance in mind
+The most used method to returns translation. It's built with performance in mind.
 Here is what you should know about it :
 
 - ✅ It does support multiple interpolation variable
