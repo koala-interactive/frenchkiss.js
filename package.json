@@ -48,10 +48,10 @@
     "del-cli": "^1.1.0",
     "eslint": "^5.12.1",
     "eslint-config-prettier": "^4.0.0",
-    "mocha": "^5.2.0",
+    "mocha": "^8.1.3",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-size-snapshot": "^0.8.0",
-    "rollup-plugin-terser": "^4.0.3"
+    "rollup-plugin-terser": "^7.0.2"
   }
 }
