@@ -40,7 +40,7 @@ const exportFormat = format => ({
   },
   plugins: [
     bannerPlugin,
-    format === 'esm' ? null : babel(),
+    babel(),
     optimizeReplace,
     terser({
       toplevel: true,
