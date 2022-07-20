@@ -189,6 +189,23 @@ describe('t', () => {
     expect(i18n.t('some_cats', { N: '8' })).to.equal('There are 8 cats here.');
   });
 
+  it('interpolates plural with pounds', () => {
+    i18n.set('en', {
+      some_cats:
+        'There {N,plural,=0{is # cat} =1{is # cat, my #st cat} other{are # cats}} here.',
+      some_dogs:
+        "There {N,plural,=0{is # dog} =1{is # dog '#'cute '#'pet} other{are # dogs}} here.",
+    });
+
+    expect(i18n.t('some_cats', { N: '0' })).to.equal('There is 0 cat here.');
+    expect(i18n.t('some_cats', { N: '1' })).to.equal('There is 1 cat, my 1st cat here.');
+    expect(i18n.t('some_cats', { N: '8' })).to.equal('There are 8 cats here.');
+
+    expect(i18n.t('some_dogs', { N: '0' })).to.equal('There is 0 dog here.');
+    expect(i18n.t('some_dogs', { N: '1' })).to.equal('There is 1 dog #cute #pet here.');
+    expect(i18n.t('some_dogs', { N: '8' })).to.equal('There are 8 dogs here.');
+  });
+
   it('interpolates select', () => {
     i18n.set('en', {
       love_pet:

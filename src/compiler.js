@@ -175,6 +175,44 @@ function parseBlocks(text) {
 }
 
 /**
+ * Replace a segment in a middle of a string
+ *
+ * @param {String} text
+ * @param {String} replacement
+ * @param {String} start
+ * @param {String} end
+ * @returns {String}
+ */
+function replaceSegment(text, replacement, start, end) {
+  return text.slice(0, start) + replacement + text.slice(end);
+}
+
+/**
+ * Replace # characters in plural expressions
+ * Handle escaped values
+ *   - # -> {variable}
+ *   - '#' -> #
+ *
+ * @param {String} text
+ * @param {String} variable
+ * @returns {String}
+ */
+function replacePounds(text, variable) {
+  let i = -1;
+
+  while ((i = text.indexOf('#', i + 1)) !== -1) {
+    if (text[i - 1] === "'" && text[i + 1] === "'") {
+      text = replaceSegment(text, '#', i - 1, i + 2);
+    } else {
+      text = replaceSegment(text, '{' + variable + '}', i, i + 1);
+      i += variable.length + 2; // shift by variable.length + "{}".length
+    }
+  }
+
+  return text;
+}
+
+/**
  * Helper to parse expression
  * {N,plural,=0{x}=1{y}other{z}}
  * {color,select,red{x}green{y}other{z}}
@@ -194,7 +232,13 @@ function parseExpression(text) {
 
   for (let i = 0; i < size - 1; ) {
     let value = parts[i++][1].trim();
-    const result = parseBlocks(parts[i++][1]);
+    let part = parts[i++][1];
+
+    if (isPlural) {
+      part = replacePounds(part, variable);
+    }
+
+    const result = parseBlocks(part);
 
     if (value === 'other') {
       defaultValue = result;
