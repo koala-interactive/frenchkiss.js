@@ -2,7 +2,7 @@
   <h1>💋 FrenchKiss.js</h1>
 
 [![Build Status](https://travis-ci.com/koala-interactive/frenchkiss.js.svg?branch=master)](https://travis-ci.com/koala-interactive/frenchkiss.js)
-[![File size](https://img.shields.io/badge/GZIP%20size-1.1%20kB-brightgreen.svg)](./dist/umd/frenchkiss.js)
+[![File size](https://img.shields.io/badge/GZIP%20size-1.3%20kB-brightgreen.svg)](./dist/umd/frenchkiss.js)
 ![](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
 ![](https://img.shields.io/snyk/vulnerabilities/github/koala-interactive/frenchkiss.js.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
