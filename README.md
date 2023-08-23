@@ -16,13 +16,14 @@ FrenchKiss is by now, _the fastest i18n JS package_ out there, working **5 to 10
 >
 > ![Node 0.10](https://img.shields.io/badge/node-0.10-blue.svg) ![IE 9](https://img.shields.io/badge/IE-9-blue.svg)
 
-⚠️  Frenchkiss is internaly using `new Function()` to create optimized functions. Therefore it can conflict when using [CSP (Content Security Policy)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) rules.
+⚠️ Frenchkiss is internaly using `new Function()` to create optimized functions. Therefore it can conflict when using [CSP (Content Security Policy)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) rules.
 You can bypass it by disabling it by using the CSP keyword `unsafe-eval`, but it is generally not recommended as it would weaken the protections offered by CSP.
 We will eventually work on a new version offering pre-compilation.
 
 ---
 
 ## 📖 Table of content
+
 - [🚀 Installation](#-installation)
 - [🖥️ How to use](#️-how-to-use)
 - [⚙️ Running the benchmarks](#️-running-the-benchmarks)
@@ -49,30 +50,19 @@ Or install using [npm](https://npmjs.org):
 
 ## 🖥️ How to use
 
-- [📖 Table of content](#-table-of-content)
-- [🚀 Installation](#-installation)
-- [🖥️ How to use](#️-how-to-use)
-  - [Minimal code](#minimal-code)
-  - [frenchkiss.locale(language?: string): string](#frenchkisslocalelanguage-string-string)
-  - [frenchkiss.set(language: string, table: object)](#frenchkisssetlanguage-string-table-object)
-  - [frenchkiss.t(key: string, params?: object, lang?: string): string](#frenchkisstkey-string-params-object-lang-string-string)
-  - [frenchkiss.extend(language: string, table: object)](#frenchkissextendlanguage-string-table-object)
-  - [frenchkiss.unset(language: string)](#frenchkissunsetlanguage-string)
-  - [frenchkiss.fallback(language?: string): string](#frenchkissfallbacklanguage-string-string)
-  - [frenchkiss.onMissingKey(fn: Function)](#frenchkissonmissingkeyfn-function)
-  - [frenchkiss.onMissingVariable(fn: Function)](#frenchkissonmissingvariablefn-function)
-  - [Nested keys](#nested-keys)
-  - [SELECT expression](#select-expression)
-  - [PLURAL expression](#plural-expression)
-  - [Plural Category](#plural-category)
-  - [Nested expressions](#nested-expressions)
-- [⚙️ Running the benchmarks](#️-running-the-benchmarks)
-- [⏳ How to test](#-how-to-test)
-- [🤝 How to contribute](#-how-to-contribute)
-- [📦 List of our other package](#-list-of-our-other-package)
-- [⛵ Join us](#-join-us)
-- [🔗 Related projects](#-related-projects)
-- [License](#license)
+- [frenchkiss.locale()](#frenchkisslocalelanguage-string-string)
+- [frenchkiss.set()](#frenchkisssetlanguage-string-table-object)
+- [frenchkiss.t()](#frenchkisstkey-string-params-object-lang-string-string)
+- [frenchkiss.extend()](#frenchkissextendlanguage-string-table-object)
+- [frenchkiss.unset()](#frenchkissunsetlanguage-string)
+- [frenchkiss.fallback()](#frenchkissfallbacklanguage-string-string)
+- [frenchkiss.onMissingKey()](#frenchkissonmissingkeyfn-function)
+- [frenchkiss.onMissingVariable()](#frenchkissonmissingvariablefn-function)
+- [Nested keys](#nested-keys)
+- [SELECT expression](#select-expression)
+- [PLURAL expression](#plural-expression)
+- [Plural category](#plural-category)
+- [Nested expressions](#nested-expressions)
 
 ### Minimal code
 
@@ -88,7 +78,7 @@ frenchkiss.locale('en');
 frenchkiss.set('en', {
   hello: 'Hello {name} !',
   fruits: {
-    apple: 'apples'
+    apple: 'apples',
   },
   // and other sentences...
 });
@@ -173,7 +163,7 @@ frenchkiss.set('en', {
 });
 
 // Helper
-const generateLanguageTranslator = lang => {
+const generateLanguageTranslator = (lang) => {
   return (key, params) => frenchkiss.t(key, params, lang);
 };
 
@@ -196,10 +186,10 @@ Extend the translation table for the language. In contrary of `set()`, the previ
 import frenchkiss from 'frenchkiss';
 
 frenchkiss.extend('en', {
- // The next two lines have already been set
- // hello: 'Hi, ',
- // howareyou: 'How are you ?',
-  greatandyou: 'Great and you ?'
+  // The next two lines have already been set
+  // hello: 'Hi, ',
+  // howareyou: 'How are you ?',
+  greatandyou: 'Great and you ?',
   // ...
 });
 ```
@@ -302,15 +292,15 @@ import frenchkiss from 'frenchkiss';
 frenchkiss.set('en', {
   fruits: {
     apple: 'An apple',
-    banana: 'A banana'
+    banana: 'A banana',
   },
   vegetables: {
     carrot: 'A carrot',
-    daikon: 'A daikon'
-  }
+    daikon: 'A daikon',
+  },
 });
 
-frenchkiss.t('fruits.apple') // => 'An apple'
+frenchkiss.t('fruits.apple'); // => 'An apple'
 ```
 
 Accessing an object directly will result on the `onMissingKey` method to be called:
@@ -321,11 +311,11 @@ import frenchkiss from 'frenchkiss';
 frenchkiss.set('en', {
   fruits: {
     apple: 'An apple',
-    banana: 'A banana'
-  }
+    banana: 'A banana',
+  },
 });
 
-frenchkiss.onMissingKey(key => `[notfound:${key}]`);
+frenchkiss.onMissingKey((key) => `[notfound:${key}]`);
 frenchkiss.t('fruits'); // => '[notfound:fruits]'
 ```
 
@@ -420,13 +410,13 @@ frenchkiss.set('fr', {
 });
 
 // Set here your plural category function
-frenchkiss.plural('en', n => {
+frenchkiss.plural('en', (n) => {
   const i = Math.floor(Math.abs(n));
   const v = n.toString().replace(/^[^.]*\.?/, '').length;
   return i === 1 && v === 0 ? 'one' : 'other';
 });
 
-frenchkiss.plural('fr', n => {
+frenchkiss.plural('fr', (n) => {
   const i = Math.floor(Math.abs(n));
   return i === 0 || i === 1 ? 'one' : 'other';
 });
@@ -473,8 +463,6 @@ frenchkiss.t('timeago', { minutes: 1, gender: 'male' }); // => 'Updated: one min
 frenchkiss.t('timeago', { minutes: 5, gender: 'male' }); // => 'Updated: 5 minutes ago by male'
 ```
 
-
-
 ---
 
 ## ⚙️ Running the benchmarks
@@ -494,14 +482,17 @@ frenchkiss.t('timeago', { minutes: 5, gender: 'male' }); // => 'Updated: 5 minut
 
 ---
 
-## 	🤝 How to contribute
+## 🤝 How to contribute
+
 - Fork the project
 - Create a branch from main/master like that
-        
+
       $ contribution/fix/your-github-identity
-     OR 
+
+  OR
 
       $ contribution/improvment/your-github-identity
+
 - Push several (if needed) clear commits
 - Add tests following the way of the other ones have been wrote
 - Make sure that all test runs
@@ -509,7 +500,8 @@ frenchkiss.t('timeago', { minutes: 5, gender: 'male' }); // => 'Updated: 5 minut
 
 ---
 
-## 	📦 List of our other package
+## 📦 List of our other package
+
 - [is-emoji-supported](https://www.npmjs.com/package/is-emoji-supported#fallback-to-images)
 - [wowza-webrtc-player](https://www.npmjs.com/package/wowza-webrtc-player)
 - [react-rich-mentions](https://www.npmjs.com/package/react-rich-mentions)
@@ -518,6 +510,7 @@ frenchkiss.t('timeago', { minutes: 5, gender: 'male' }); // => 'Updated: 5 minut
 ---
 
 ## ⛵ Join us
+
 May you want to share more than a pull request
 check our [jobs opportunity](https://www.linkedin.com/company/koala-interactive/jobs/)
 
