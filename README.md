@@ -1,4 +1,5 @@
-<div align="center">
+![Logo](https://koala-interactive.com/logo.e927957b.svg)
+
   <h1>💋 FrenchKiss.js</h1>
 
 [![File size](https://img.shields.io/badge/GZIP%20size-1.3%20kB-brightgreen.svg)](./dist/umd/frenchkiss.js)
@@ -6,7 +7,7 @@
 ![](https://img.shields.io/snyk/vulnerabilities/github/koala-interactive/frenchkiss.js.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
-</div>
+## Description
 
 FrenchKiss.js is a blazing fast lightweight i18n library written in JavaScript, working both in the browser and NodeJS environments. It provides a simple and really fast solution for handling internationalization.
 
@@ -20,8 +21,6 @@ FrenchKiss is by now, _the fastest i18n JS package_ out there, working **5 to 10
 You can bypass it by disabling it by using the CSP keyword `unsafe-eval`, but it is generally not recommended as it would weaken the protections offered by CSP.
 We will eventually work on a new version offering pre-compilation.
 
----
-
 ## 📖 Table of content
 
 - [🚀 Installation](#-installation)
@@ -34,8 +33,6 @@ We will eventually work on a new version offering pre-compilation.
 - [🔗 Related projects](#-related-projects)
 - [📝 License](#license)
 
----
-
 ## 🚀 Installation
 
 Install with [yarn](https://yarnpkg.com):
@@ -45,8 +42,6 @@ Install with [yarn](https://yarnpkg.com):
 Or install using [npm](https://npmjs.org):
 
     $ npm i frenchkiss
-
----
 
 ## 🖥️ How to use
 
@@ -463,8 +458,6 @@ frenchkiss.t('timeago', { minutes: 1, gender: 'male' }); // => 'Updated: one min
 frenchkiss.t('timeago', { minutes: 5, gender: 'male' }); // => 'Updated: 5 minutes ago by male'
 ```
 
----
-
 ## ⚙️ Running the benchmarks
 
     $ cd benchmark
@@ -474,13 +467,9 @@ frenchkiss.t('timeago', { minutes: 5, gender: 'male' }); // => 'Updated: 5 minut
 
 ![i18n benchmark](./benchmark/benchmark.jpg)
 
----
-
 ## ⏳ How to test
 
     $ npm test
-
----
 
 ## 🤝 How to contribute
 
@@ -498,8 +487,6 @@ frenchkiss.t('timeago', { minutes: 5, gender: 'male' }); // => 'Updated: 5 minut
 - Make sure that all test runs
 - Push your code
 
----
-
 ## 📦 List of our other package
 
 - [is-emoji-supported](https://www.npmjs.com/package/is-emoji-supported#fallback-to-images)
@@ -507,21 +494,15 @@ frenchkiss.t('timeago', { minutes: 5, gender: 'male' }); // => 'Updated: 5 minut
 - [react-rich-mentions](https://www.npmjs.com/package/react-rich-mentions)
 - [react-anchor-navigation](https://www.npmjs.com/package/react-anchor-navigation)
 
----
-
 ## ⛵ Join us
 
 May you want to share more than a pull request
 check our [jobs opportunity](https://www.linkedin.com/company/koala-interactive/jobs/)
 
----
-
 ## 🔗 Related projects
 
 - [i18next-scanner](https://github.com/i18next/i18next-scanner): Scan your code, extract translation keys/values, and merge them into i18n resource files.
 - [i18n-extract](https://github.com/oliviertassinari/i18n-extract): Manage localization with static analysis. (report unused/missing/duplicated key, extract them).
-
----
 
 ## License
 
