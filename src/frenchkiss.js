@@ -132,20 +132,18 @@ export const fallback = language => {
  * @param {Object} table
  */
 export const set = (language, table) => {
-  flattenObjectKeys(table, table, '');
-
   cache[language] = {};
-  store[language] = table;
+  store[language] = flattenObjectKeys(table, '');
 };
 
 /**
  * Flatten keys for flat object { [string]: string }
  *
- * @param {Object} table
  * @param {Object} data
  * @param {String} prefix
  */
-const flattenObjectKeys = (table, data, prefix) => {
+const flattenObjectKeys = (data, prefix) => {
+  let table = {};
   const keys = Object.keys(data);
   const count = keys.length;
 
@@ -154,12 +152,15 @@ const flattenObjectKeys = (table, data, prefix) => {
     const prefixKey = prefix + key;
 
     if (typeof data[key] === 'object') {
-      flattenObjectKeys(table, data[key], prefixKey + '.');
-      delete table[key];
+      table = Object.assign(
+        table,
+        flattenObjectKeys(data[key], prefixKey + '.')
+      );
     } else {
       table[prefixKey] = String(data[key]);
     }
   }
+  return table;
 };
 
 /**
